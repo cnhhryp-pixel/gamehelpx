@@ -14,6 +14,7 @@
       "slug": "phantom-blade-zero",
       "name": "Phantom Blade Zero",
       "release": "2026-10-29",
+      "regionalReleaseNote": "October 28 in the US and select regions",
       "score": 90,
       "status": "pre-launch"
     },
@@ -31,6 +32,44 @@
       "earlyAccess": "2026-10-01",
       "score": 87,
       "status": "pre-launch"
+    }
+  ],
+  "watchlist": [
+    {
+      "name": "ACE COMBAT 8: WINGS OF THEVE",
+      "steamDate": "2026-10-01",
+      "genre": "Flight / Action",
+      "status": "watch"
+    },
+    {
+      "name": "Castlevania: Belmont's Curse",
+      "steamDate": "2026-10-14",
+      "genre": "Metroidvania / Action RPG",
+      "status": "watch"
+    },
+    {
+      "name": "FINAL FANTASY RESONANCE",
+      "steamDate": "2026-10-22",
+      "genre": "JRPG",
+      "status": "watch"
+    },
+    {
+      "name": "Songs of Glimmerwick",
+      "steamDate": "2026-09-30",
+      "genre": "Life Sim",
+      "status": "watch"
+    },
+    {
+      "name": "Permafrost",
+      "steamDate": "2026-10-09",
+      "genre": "Survival Craft",
+      "status": "watch"
+    },
+    {
+      "name": "Transport Fever 3",
+      "steamDate": "2026-09-29",
+      "genre": "Management / Simulation",
+      "status": "watch"
     }
   ]
 }
