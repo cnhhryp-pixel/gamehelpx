@@ -1,0 +1,36 @@
+{
+  "updated": "2026-09-29",
+  "methodology": "Editorial opportunity score; not a measured popularity ranking.",
+  "games": [
+    {
+      "slug": "aion-2",
+      "name": "AION 2",
+      "release": "2026-10-05",
+      "earlyAccess": "2026-09-30",
+      "score": 92,
+      "status": "pre-launch"
+    },
+    {
+      "slug": "phantom-blade-zero",
+      "name": "Phantom Blade Zero",
+      "release": "2026-10-29",
+      "score": 90,
+      "status": "pre-launch"
+    },
+    {
+      "slug": "minecraft-dungeons-ii",
+      "name": "Minecraft Dungeons II",
+      "release": "2026-09-29",
+      "score": 89,
+      "status": "launch"
+    },
+    {
+      "slug": "gears-of-war-e-day",
+      "name": "Gears of War: E-Day",
+      "release": "2026-10-06",
+      "earlyAccess": "2026-10-01",
+      "score": 87,
+      "status": "pre-launch"
+    }
+  ]
+}
