@@ -1,0 +1,17 @@
+name: Content Quality Audit
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  content-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Score page depth
+        run: python scripts/content_quality_audit.py
