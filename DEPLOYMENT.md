@@ -22,7 +22,14 @@ Optional secondary domain:
 
 - `https://www.gamehelpx.com`
 
-The repository redirects `www.gamehelpx.com/*` to the apex domain.
+Important: Cloudflare Pages `_redirects` does **not** support domain-level redirects. If `www.gamehelpx.com` is attached, configure `www → apex` in Cloudflare with a Bulk Redirect or Redirect Rule.
+
+Recommended redirect:
+
+- Source: `https://www.gamehelpx.com/*`
+- Target: `https://gamehelpx.com/${1}`
+- Status: `301`
+- Preserve query string: enabled
 
 ## After connecting the domain
 
@@ -33,14 +40,16 @@ Verify:
 - `https://gamehelpx.com/sitemap.xml`
 - `https://gamehelpx.com/tools/`
 - `https://gamehelpx.com/games/elden-ring/`
+- `https://www.gamehelpx.com/` redirects to the apex domain
 
 Expected production behavior:
 
 - `robots.txt` points to `https://gamehelpx.com/sitemap.xml`
 - canonicals use `https://gamehelpx.com/`
 - `_headers` provides security/cache headers
-- `_redirects` provides canonical redirects
+- `_redirects` handles path-level redirects only
 - `404.html` is the custom not-found page
+- Cloudflare handles host-level redirects such as `www → apex`
 
 ## Search Console
 
