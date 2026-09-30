@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-29",
+  "updated": "2026-09-30",
   "methodology": "Editorial opportunity score; not a measured popularity ranking.",
   "games": [
     {
@@ -8,7 +8,7 @@
       "release": "2026-10-05",
       "earlyAccess": "2026-09-30",
       "score": 92,
-      "status": "pre-launch"
+      "status": "early-access"
     },
     {
       "slug": "phantom-blade-zero",
