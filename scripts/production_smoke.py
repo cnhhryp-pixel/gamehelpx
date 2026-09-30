@@ -118,11 +118,46 @@ try:
 except Exception as e:
     errors.append(str(e))
 
-print("PRODUCTION SMOKE")
-for e in errors: print("ERROR",e)
-print(f"RESULT: {len(errors)} errors")
-sys.exit(1 if errors else 0)
+# Homepage internal-link audit: every internal homepage anchor must resolve
+# to itself rather than silently redirecting to another route.
+try:
+    from html.parser import HTMLParser as _HTMLParser
+    class _AnchorParser(_HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.hrefs=[]
+        def handle_starttag(self,tag,attrs):
+            if tag!="a": return
+            a=dict(attrs)
+            href=a.get("href")
+            if href: self.hrefs.append(href)
 
+    status,headers,final,body=fetch(BASE+"/")
+    hp=_AnchorParser()
+    hp.feed(body.decode("utf-8","replace"))
+    homepage_paths=sorted(set(
+        h.split("#",1)[0].split("?",1)[0]
+        for h in hp.hrefs
+        if h.startswith("/")
+    ))
+    bad=[]
+    redirected=[]
+    for path in homepage_paths:
+        status,headers,final,body=fetch(BASE+path)
+        if status!=200:
+            bad.append(f"{path}: status {status}")
+            continue
+        expected=(BASE+path).rstrip("/")+"/"
+        got=final.rstrip("/")+"/"
+        if got!=expected:
+            redirected.append(f"{path} -> {final}")
+    print(f"Homepage link audit: {len(homepage_paths)} unique internal links checked")
+    if bad:
+        errors.append("homepage links failing: "+", ".join(bad[:10]))
+    if redirected:
+        errors.append("homepage links redirect unexpectedly: "+", ".join(redirected[:10]))
+except Exception as e:
+    errors.append(f"homepage link audit failed: {e}")
 
 # Search-index link audit: every dynamic search result must resolve on production.
 try:
@@ -158,3 +193,10 @@ try:
             errors.append("search links redirect unexpectedly: "+", ".join(redirected[:10]))
 except Exception as e:
     errors.append(f"search index audit failed: {e}")
+
+
+print("PRODUCTION SMOKE")
+for e in errors:
+    print("ERROR",e)
+print(f"RESULT: {len(errors)} errors")
+sys.exit(1 if errors else 0)
