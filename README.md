@@ -1,21 +1,28 @@
 # GameHelpX
 
-GameHelpX is a static-first multi-game SEO platform.
+GameHelpX is a static-first multi-game SEO and browser-tool platform.
 
 ## Traffic model
-1. **Launch-window engine** — prepare pages before high-interest releases, expand during launch, then retain useful pages.
-2. **Evergreen engine** — cover older popular games with durable search demand through guides, wiki-style references, builds, databases and browser tools.
+1. **Launch-window engine** — prepare verified pages around high-interest releases, expand during launch, then retain useful pages.
+2. **Evergreen engine** — cover proven games with durable demand through guides, wiki-style references, builds, databases and browser tools.
 
 ## Content layers
 - Upcoming / launch radar
 - Game hubs
 - Guides / wiki pages
 - Builds
-- Tools / calculators
+- Browser tools / calculators / planners
 - Databases
 - Evergreen archive
 
 ## Deployment
-Static-first: GitHub → Cloudflare Pages.
+Production: GitHub → Cloudflare Pages.
 
-Domain: https://gamehelpx.com
+- Domain: https://gamehelpx.com
+- Production branch: `main`
+- Build command: none
+- Publish directory: repository root
+
+Development preview: https://cnhhryp-pixel.github.io/gamehelpx/
+
+See `DEPLOYMENT.md` for the production launch checklist.
