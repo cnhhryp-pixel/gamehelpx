@@ -1,0 +1,19 @@
+name: Production Smoke Test
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Wait briefly for Cloudflare Pages deployment
+        run: sleep 35
+      - name: Check live production site
+        run: python scripts/production_smoke.py
