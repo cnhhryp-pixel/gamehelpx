@@ -122,3 +122,39 @@ print("PRODUCTION SMOKE")
 for e in errors: print("ERROR",e)
 print(f"RESULT: {len(errors)} errors")
 sys.exit(1 if errors else 0)
+
+
+# Search-index link audit: every dynamic search result must resolve on production.
+try:
+    import json
+    raw=(ROOT/"data/search-index.js").read_text(encoding="utf-8").strip()
+    prefix="window.GHX_SEARCH_INDEX="
+    if not raw.startswith(prefix):
+        errors.append("search index format unexpected")
+    else:
+        payload=raw[len(prefix):]
+        if payload.endswith(";"):
+            payload=payload[:-1]
+        rows=json.loads(payload)
+        bad=[]
+        redirected=[]
+        for row in rows:
+            path=row.get("url","")
+            if not path.startswith("/"):
+                bad.append(f"{path}: invalid path")
+                continue
+            status,headers,final,body=fetch(BASE+path)
+            if status!=200:
+                bad.append(f"{path}: status {status}")
+                continue
+            expected=(BASE+path).rstrip("/")+"/"
+            got=final.rstrip("/")+"/"
+            if got!=expected:
+                redirected.append(f"{path} -> {final}")
+        print(f"Search-index link audit: {len(rows)} links checked")
+        if bad:
+            errors.append("search links failing: "+", ".join(bad[:10]))
+        if redirected:
+            errors.append("search links redirect unexpectedly: "+", ".join(redirected[:10]))
+except Exception as e:
+    errors.append(f"search index audit failed: {e}")
