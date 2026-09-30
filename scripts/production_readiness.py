@@ -117,14 +117,17 @@ else:
     if extra:
         errors.append("sitemap routes without HTML: "+", ".join(extra[:20]))
 
-# Production redirect / headers.
+# Production path redirects / headers.
+# Host-level redirects such as www -> apex are verified by the live smoke test,
+# because Cloudflare Pages _redirects does not support domain-level redirects.
 redirects=ROOT/"_redirects"
 if not redirects.exists():
     errors.append("missing _redirects")
 else:
     rd=redirects.read_text(encoding="utf-8")
-    if "https://www.gamehelpx.com/* https://gamehelpx.com/:splat 301" not in rd:
-        errors.append("missing www -> apex redirect")
+    for expected in ("/home / 301", "/index.html / 301"):
+        if expected not in rd:
+            errors.append(f"_redirects missing path rule: {expected}")
 
 headers=ROOT/"_headers"
 if not headers.exists():
