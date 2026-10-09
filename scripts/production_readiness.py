@@ -5,6 +5,8 @@ import re, sys, xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]
 PROD="https://gamehelpx.com"
+ADSENSE_PUB="ca-pub-4228902685584187"
+ADS_TXT_LINE="google.com, pub-4228902685584187, DIRECT, f08c47fec0942fa0"
 CORE={
     "/",
     "/games/",
@@ -83,6 +85,20 @@ for route in CORE:
     for key in ("twitter:card","twitter:title","twitter:description"):
         if not d.twitter.get(key):
             errors.append(f"{route}: missing {key}")
+
+# AdSense rollout integrity.
+for route,(p,d) in pages.items():
+    raw=p.read_text(encoding="utf-8")
+    if ADSENSE_PUB not in raw:
+        errors.append(f"{route}: missing AdSense publisher code")
+
+ads_txt=ROOT/"ads.txt"
+if not ads_txt.exists():
+    errors.append("missing ads.txt")
+else:
+    ads_raw=ads_txt.read_text(encoding="utf-8")
+    if ADS_TXT_LINE not in ads_raw:
+        errors.append("ads.txt missing expected Google seller authorization")
 
 # robots.txt
 robots=(ROOT/"robots.txt")
